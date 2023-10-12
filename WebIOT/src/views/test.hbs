@@ -1,0 +1,76 @@
+<img id="imgLED" width="350px" src="./dentat.png" alt="">
+
+    <button id="btnON" value="3">  on </button>
+    <button id="btnOFF"> off </button>
+    <h2 style="color:red ;">KHI GAS : <h3 id="gas"></h3></h2>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDZq_9AQ1Y_S68Rag0FuljjVbduXkV_-0U",
+        authDomain: "smarthome-9e7cc.firebaseapp.com",
+        databaseURL: "https://smarthome-9e7cc-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "smarthome-9e7cc",
+        storageBucket: "smarthome-9e7cc.appspot.com",
+        messagingSenderId: "704953647768",
+        appId: "1:704953647768:web:43617741b49c2cf445c6ed",
+        measurementId: "G-8SSEET7CKX"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+       
+      import {getDatabase,ref,get,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+      const db = getDatabase();
+  
+      var btnON = document.getElementById("btnON");
+      var btnOFF = document.getElementById("btnOFF");
+      var imgLED = document.getElementById("imgLED");
+       
+  
+  
+  
+      btnON.onclick = function(){
+         update(ref(db,"/" ),{
+          SateLed:1
+         }).then(()=>{
+          imgLED.src ="./denbat.png"
+         }).catch((error)=>{
+          alert('them that bai');
+         })
+      }
+  
+      btnOFF.onclick = function(){
+         update(ref(db,"/" ),{
+          SateLed:0
+         }).then(()=>{
+          imgLED.src ="./dentat.png"
+         }).catch((error)=>{
+          alert('them that bai');
+         })
+      }
+  
+      function getdata(){
+        get(ref(db)).then((snapshot)=>{
+        if(snapshot.exists()){
+          document.getElementById("gas").innerHTML = snapshot.val().Gas;
+  
+        }else{
+          alert("khong co du lieu ");
+        }
+      }).catch((error)=>{
+        alert("loi");
+      })
+      }
+      
+      setInterval(getdata,300)
+     
+  
+  
+    </script>
